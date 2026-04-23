@@ -9,6 +9,43 @@ const EASE_OUT = "power3.out";
 /* ---------- Hero: 정적 요소 등장 ---------- */
 gsap.timeline({ delay: 0.2 }).from(".hero-desc", { y: 30, opacity: 0, duration: 1.2, ease: EASE_OUT }).from(".hero-btns", { y: 30, opacity: 0, duration: 1.2, ease: EASE_OUT }, "-=0.9").to(".scroll-indicator", { opacity: 1, y: 0, duration: 1, ease: "power2.out" }, "-=0.5");
 
+/* ---------- Resume Modal ---------- */
+const resumeBtn = document.getElementById("open-resume");
+const resumeModal = document.getElementById("resume-modal");
+const closeModal = document.getElementById("close-modal");
+const resumeImage = document.getElementById("resume-image");
+const modalOverlay = document.querySelector(".modal-overlay");
+
+if (resumeBtn && resumeModal) {
+  const openModal = (e) => {
+    e.preventDefault();
+    // 이력서 이미지 경로 (준비된 이미지 파일명으로 수정 가능)
+    const imageUrl = "img/Resume.png"; 
+    resumeImage.src = imageUrl;
+    resumeModal.classList.add("active");
+    document.body.classList.add("modal-open");
+  };
+
+  const closeResumeModal = () => {
+    resumeModal.classList.remove("active");
+    document.body.classList.remove("modal-open");
+    setTimeout(() => {
+      resumeImage.src = "";
+    }, 400);
+  };
+
+  resumeBtn.addEventListener("click", openModal);
+  closeModal?.addEventListener("click", closeResumeModal);
+  modalOverlay?.addEventListener("click", closeResumeModal);
+
+  // ESC 키로 닫기
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && resumeModal.classList.contains("active")) {
+      closeResumeModal();
+    }
+  });
+}
+
 /* ---------- Hero: 무한 루프 텍스트 ---------- */
 (() => {
   const heroTexts = [
